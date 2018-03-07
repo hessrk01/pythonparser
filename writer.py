@@ -75,8 +75,11 @@ def writeRow(worksheet, row, rownumber, width):
 
 def setColumnWidth(maxSizeList, lengthList):
     for n, x in enumerate(maxSizeList):
-        if x < lengthList[n]:
-            maxSizeList[n] = lengthList[n]
+        try:
+            if x < lengthList[n]:
+                maxSizeList[n] = lengthList[n]
+        except (IndexError):
+            maxSizeList[n] = 15
     return maxSizeList
 
 def createTitleSheet(library, tables, workBook):
@@ -120,7 +123,7 @@ def main(csvfilename):
     createTitleSheet(library, tablesWithNames, workBook)
 
     maxList = []
-    header = ['Library', 'Table', 'Column', 'Data Type', 'Column Description']
+    header = ['Library', 'Table', 'Column', 'Data Type', 'Column Description', 'CMS Database', 'CMS Table', 'CMS Field', 'CMS Note']
     length_list = [len(x) for x in header]
 
     for val in tables:
